@@ -15,8 +15,8 @@ class DiscountSeeder extends Seeder
     {
         DB::table('discounts')->insert([
             [
-                'name' => json_encode(['en' => '10% Off', 'ar' => 'خصم 10%']),
-                'description' => json_encode(['en' => 'Get 10% off on your first purchase.', 'ar' => 'احصل على خصم 10% على أول عملية شراء.']),
+                'name' => json_encode(['en' => '10% Off', 'ar' => 'خصم 10%'] , JSON_UNESCAPED_UNICODE),
+                'description' => json_encode(['en' => 'Get 10% off on your first purchase.', 'ar' => 'احصل على خصم 10% على أول عملية شراء.'] ,JSON_UNESCAPED_UNICODE),
                 'value' => 10.00,
                 'discount_application' => 'code_based',
                 'start_date' => now(),

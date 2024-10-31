@@ -14,9 +14,9 @@ class SizeSeeder extends Seeder
     public function run(): void
     {
         DB::table('sizes')->insert([
-            ['name' => json_encode(['en' => 'Small', 'ar' => 'صغير'])],
-            ['name' => json_encode(['en' => 'Medium', 'ar' => 'متوسط'])],
-            ['name' => json_encode(['en' => 'Large', 'ar' => 'كبير'])],
+            ['name' => json_encode(['en' => 'Small', 'ar' => 'صغير'],JSON_UNESCAPED_UNICODE)],
+            ['name' => json_encode(['en' => 'Medium', 'ar' => 'متوسط'],JSON_UNESCAPED_UNICODE)],
+            ['name' => json_encode(['en' => 'Large', 'ar' => 'كبير'],JSON_UNESCAPED_UNICODE)],
         ]);
     }
 }

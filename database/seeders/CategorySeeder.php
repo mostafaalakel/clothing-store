@@ -15,15 +15,15 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'name' => json_encode(['en' => 'Clothing', 'ar' => 'ملابس']),
+                'name' => json_encode(['en' => 'Clothing', 'ar' => 'ملابس'] , JSON_UNESCAPED_UNICODE),
                 'image' => 'path/to/image1.jpg'
             ],
             [
-                'name' => json_encode(['en' => 'Footwear', 'ar' => 'أحذية']),
+                'name' => json_encode(['en' => 'Footwear', 'ar' => 'أحذية'] , JSON_UNESCAPED_UNICODE),
                 'image' => 'path/to/image2.jpg'
             ],
             [
-                'name' => json_encode(['en' => 'Accessories', 'ar' => 'إكسسوارات']),
+                'name' => json_encode(['en' => 'Accessories', 'ar' => 'إكسسوارات'],JSON_UNESCAPED_UNICODE),
                 'image' => 'path/to/image3.jpg'
             ],
         ]);

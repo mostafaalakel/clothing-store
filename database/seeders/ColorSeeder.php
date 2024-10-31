@@ -14,9 +14,9 @@ class ColorSeeder extends Seeder
     public function run(): void
     {
         DB::table('colors')->insert([
-            ['name' => json_encode(['en' => 'Red', 'ar' => 'أحمر'])],
-            ['name' => json_encode(['en' => 'Blue', 'ar' => 'أزرق'])],
-            ['name' => json_encode(['en' => 'Green', 'ar' => 'أخضر'])],
+            ['name' => json_encode(['en' => 'Red', 'ar' => 'أحمر'],JSON_UNESCAPED_UNICODE)],
+            ['name' => json_encode(['en' => 'Blue', 'ar' => 'أزرق'],JSON_UNESCAPED_UNICODE)],
+            ['name' => json_encode(['en' => 'Green', 'ar' => 'أخضر'],JSON_UNESCAPED_UNICODE)],
         ]);
     }
 }
