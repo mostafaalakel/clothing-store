@@ -31,4 +31,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Discount::class, 'product_discounts');
     }
+    
+    public function productImages(){
+        return $this->hasMany(ProductImage::class);
+    }
 }

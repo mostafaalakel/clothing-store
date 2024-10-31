@@ -17,7 +17,6 @@ return new class extends Migration
             $table->enum('gender' , ['m' , 'f' , 'a']);
             $table->json('name');
             $table->json('description');
-            $table->string('image');
             $table->decimal('price');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
