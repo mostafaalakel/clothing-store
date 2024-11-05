@@ -16,10 +16,10 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
-            'gender' => $this->gender, 
-            'main_image' => $this->productImages->first()->image_url ?? null ,
+            'name' => $this->getTranslation('name', app()->getLocale()),
+            'description' => $this->getTranslation('description' , app()->getLocale()),
+            'gender' => $this->gender,
+            'main_image' => $this->productImages->first()->image_url ?? null,
             'price' => $this->price,
             'reviews' => ReviewResource::collection($this->reviews)
         ];
