@@ -19,9 +19,8 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'gender' => $this->gender, 
-            'main_image' => $this->productImages->first()->image_url,
+            'main_image' => $this->productImages->first()->image_url ?? null ,
             'price' => $this->price,
-            'avg_rating' => $this->avg_rating,
             'reviews' => ReviewResource::collection($this->reviews)
         ];
     }
