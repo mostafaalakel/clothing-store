@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use HasFactory , HasTranslations;
-    protected $fillable = ['category_id', 'gender', 'image', 'price'];
+    use HasFactory, HasTranslations;
+    protected $fillable = ['category_id', 'name', 'gender', 'image', 'description', 'price'];
     public $translatable = ['name', 'description'];
 
     public function category()
@@ -31,8 +31,13 @@ class Product extends Model
     {
         return $this->belongsToMany(Discount::class, 'product_discounts');
     }
-    
-    public function productImages(){
+
+    public function productImages()
+    {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function getAvgRatingAttribute(){
+        return $this->reviews()->avg('rating');
     }
 }
