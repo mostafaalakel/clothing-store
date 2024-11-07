@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\User\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::middleware('auth:admin')->post('logout', [AdminAuthController::class, 'logout']);
     Route::middleware('auth:admin')->post('refresh', [AdminAuthController::class, 'refresh']);
 });
+
+Route::get('/product/{product_id}' , [ProductController::class ,'productDetails'])->middleware('setLocale');
