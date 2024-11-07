@@ -19,7 +19,6 @@ class ReviewResource extends JsonResource
         return [
             'name' => User::find($this->user_id)->name,
             'rating' => $this->rating,
-            'comment' => $this->comment,
         ];
     }
 }
