@@ -15,13 +15,14 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->getTranslation('name', app()->getLocale()),
+            'product_id' => $this->id,
+            'name'  => $this->getTranslation('name' , app()->getLocale()),
             'description' => $this->getTranslation('description' , app()->getLocale()),
-            'gender' => $this->gender,
-            'main_image' => $this->productImages->first()->image_url ?? null,
-            'price' => $this->price,
-            'reviews' => ReviewResource::collection($this->reviews)
+            'price' =>  $this->price,
+            'gender' => $this ->gender ,
+            'product_details'=> ProductDetailResource::collection($this->productDetails) ,
+            'product_images' => ProductImageResource::collection($this-> productImages) , 
+            'rating' => $this->avg_rating
         ];
     }
 }
