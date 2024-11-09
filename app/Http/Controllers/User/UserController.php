@@ -68,7 +68,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // event(new CartEvent($user));
+        event(new CartEvent($user));
 
         $token = Auth::guard('user')->login($user);
 
