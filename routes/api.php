@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\Admin\AdminAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::middleware('auth:admin')->post('refresh', [AdminAuthController::class, 'refresh']);
 });
 
+Route::group(['prefix' => 'cart' , 'middleware' => ['auth:user' , 'setLocale'] ] , function(){
+    Route::get('showCart', [CartController::class, 'ShowCartItems']);
+    Route::post('addToCart', [CartController::class, 'addToCart']);
+    Route::delete('deleteItem/{cartItem_id}', [CartController::class, 'deleteItem']);
+    Route::patch('updateItem/{cartItem_id}', [CartController::class, 'updateItemQuantity']);
+});
 Route::get('/product/{product_id}' , [ProductController::class ,'productDetails'])->middleware('setLocale');
