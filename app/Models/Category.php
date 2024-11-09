@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Category extends Model
 {
     use HasFactory , HasTranslations;
-    protected $fillable = ['image'];
+    protected $fillable = ['name','image'];
     public $translatable = ['name'];
 
     public function products()
