@@ -18,7 +18,16 @@ class User extends Authenticatable implements JWTSubject
    *
    * @var array<int, string>
    */
-  protected $fillable = ['name', 'email', 'password', 'email_verified_at', 'remember_token'];
+  protected $fillable = [
+    'name',
+    'email',
+    'google_id',
+    'facebook_id',
+    'password',
+    'provider',
+    'email_verified_at',
+    'remember_token'
+  ];
 
   public function cart()
   {
