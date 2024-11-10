@@ -10,10 +10,11 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\ApiResponseTrait;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
-class UserController extends Controller
+class UserAuthController extends Controller
 {
     use ApiResponseTrait;
 
@@ -101,5 +102,55 @@ class UserController extends Controller
         return response()->json([
             'token' => Auth::guard('user')->refresh()
         ]);
+    }
+
+    public function redirectToProvider($provider)
+    {
+        if (!in_array($provider, ['google', 'facebook'])) {
+            return response()->json(['error' => 'Invalid provider'], 400);
+        }
+
+        $loginUrl = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
+
+        return response()->json([
+            'login_url' => $loginUrl,
+        ]);
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        try {
+            if (!in_array($provider, ['google', 'facebook'])) {
+                return response()->json(['error' => 'Invalid provider'], 400);
+            }
+
+            $userSocial = Socialite::driver($provider)->stateless()->user();
+
+            $user = User::where('email', $userSocial->getEmail())->first();
+            if (!$user) {
+                $user = User::create([
+                    'name' => $userSocial->getName(),
+                    'email' => $userSocial->getEmail(),
+                    "{$provider}_id" => $userSocial->getId(),
+                    'provider' => $provider
+                ]);
+                event(new CartEvent($user));
+            }
+
+            $token = Auth::guard('user')->login($user);
+            $user = new UserResource($user);
+            $data = [
+                'user' => $user,
+                'authorization' =>  [
+                    'token' => $token,
+                    'type' => 'bearer',
+                    'expires_in' => JWTAuth::factory()->getTTL() * 60
+                ]
+            ];
+
+            return $this->apiResponse('success', 'You are logged in successfully', $data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Authentication failed'], 401);
+        }
     }
 }
