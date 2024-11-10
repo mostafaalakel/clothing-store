@@ -4,9 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\CartController;
-use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\UserAuthController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\User\SocialAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,10 +28,10 @@ Route::get('/home' , [HomeController::class , 'index'])->middleware('setLocale')
 
 // Routes for Users auth
 Route::group(["prefix" => 'user'], function () {
-    Route::post('login', [UserController::class, 'login']);
-    Route::post('register', [UserController::class, 'register']);
-    Route::middleware('auth:user')->post('logout', [UserController::class, 'logout']);
-    Route::middleware('auth:user')->post('refresh', [UserController::class, 'refresh']);
+    Route::post('login', [UserAuthController::class, 'login']);
+    Route::post('register', [UserAuthController::class, 'register']);
+    Route::middleware('auth:user')->post('logout', [UserAuthController::class, 'logout']);
+    Route::middleware('auth:user')->post('refresh', [UserAuthController::class, 'refresh']);
 });
 
 
@@ -49,3 +50,6 @@ Route::group(['prefix' => 'cart' , 'middleware' => ['auth:user' , 'setLocale'] ]
     Route::patch('updateItem/{cartItem_id}', [CartController::class, 'updateItemQuantity']);
 });
 Route::get('/product/{product_id}' , [ProductController::class ,'productDetails'])->middleware('setLocale');
+
+Route::get('/auth/redirect/{provider}', [UserAuthController::class, 'redirectToProvider']);
+Route::get('/auth/callback/{provider}', [UserAuthController::class, 'handleProviderCallback']);
