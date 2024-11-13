@@ -7,7 +7,6 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\UserAuthController;
 use App\Http\Controllers\Admin\AdminAuthController;
-use App\Http\Controllers\User\SocialAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +48,13 @@ Route::group(['prefix' => 'cart' , 'middleware' => ['auth:user' , 'setLocale'] ]
     Route::delete('deleteItem/{cartItem_id}', [CartController::class, 'deleteItem']);
     Route::patch('updateItem/{cartItem_id}', [CartController::class, 'updateItemQuantity']);
 });
-Route::get('/product/{product_id}' , [ProductController::class ,'productDetails'])->middleware('setLocale');
+
+
+Route::group(['prefix' => 'product' , 'middleware' => 'setLocale' ] , function(){
+    Route::get('/filter' , [ProductController::class ,'filterProduct']);
+    Route::get('/{product_id}' , [ProductController::class ,'productDetails']);
+    Route::get('/category/{category_id}' , [ProductController::class ,'showProductOfCategory']);
+});
 
 Route::get('/auth/redirect/{provider}', [UserAuthController::class, 'redirectToProvider']);
 Route::get('/auth/callback/{provider}', [UserAuthController::class, 'handleProviderCallback']);
