@@ -20,7 +20,7 @@ class ProductSummaryResource extends JsonResource
             'description' => $this->getTranslation('description' , app()->getLocale()),
             'gender' => $this->gender,
             'main_image' => $this->productImages->first()->image_url ?? null,
-            'price' => $this->price,
+            'price' => $this->price . "$",
         ];
     }
 }
