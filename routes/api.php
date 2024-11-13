@@ -7,6 +7,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\UserAuthController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\User\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,9 @@ Route::group(["prefix" => 'user'], function () {
     Route::middleware('auth:user')->post('logout', [UserAuthController::class, 'logout']);
     Route::middleware('auth:user')->post('refresh', [UserAuthController::class, 'refresh']);
 });
+Route::get('/auth/redirect/{provider}', [UserAuthController::class, 'redirectToProvider']);
+Route::get('/auth/callback/{provider}', [UserAuthController::class, 'handleProviderCallback']);
+
 
 
 // Routes for Admins auth
@@ -56,5 +60,5 @@ Route::group(['prefix' => 'product' , 'middleware' => 'setLocale' ] , function()
     Route::get('/category/{category_id}' , [ProductController::class ,'showProductOfCategory']);
 });
 
-Route::get('/auth/redirect/{provider}', [UserAuthController::class, 'redirectToProvider']);
-Route::get('/auth/callback/{provider}', [UserAuthController::class, 'handleProviderCallback']);
+Route::post('/review/addReview' , [ReviewController::class ,'addReview'])->middleware('auth:user');
+
