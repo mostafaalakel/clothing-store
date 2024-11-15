@@ -15,7 +15,7 @@ class SizeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->getTranslation('name', app()->getLocale())
+            'size_name' => $this->getTranslation('name', app()->getLocale())
         ];
     }
 }

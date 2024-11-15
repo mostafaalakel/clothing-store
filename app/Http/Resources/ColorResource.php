@@ -15,7 +15,7 @@ class ColorResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->getTranslation('name', app()->getLocale())
+            'color_name' => $this->getTranslation('name', app()->getLocale())
         ];
     }
 }
