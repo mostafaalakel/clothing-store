@@ -14,13 +14,27 @@ class ProductSummaryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->getTranslation('name', app()->getLocale()),
-            'description' => $this->getTranslation('description' , app()->getLocale()),
+
+        $data = [
+            'product_id' => $this->id,
+            'product_name' => $this->getTranslation('name', app()->getLocale()),
+            'product_description' => $this->getTranslation('description', app()->getLocale()),
             'gender' => $this->gender,
             'main_image' => $this->productImages->first()->image_url ?? null,
-            'price' => $this->price . "$",
+            'product_price' => $this->price . "$",
         ];
+
+        if ($this->discounts->isNotEmpty()) {
+            $data['price_after_discounts'] = $this->price_after_discounts . "$";
+            $data['discounts'] = $this->discounts->map(function ($discount) {
+                return [
+                    'discount_id' => $discount->id,
+                    'discount_name' => $discount->getTranslation('name', app()->getLocale()),
+                    'discount_value' => $discount->value,
+                ];
+            });
+        }
+
+        return $data;
     }
 }

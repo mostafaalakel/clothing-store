@@ -56,6 +56,7 @@ Route::group(['prefix' => 'cart' , 'middleware' => ['auth:user' , 'setLocale'] ]
 
 Route::group(['prefix' => 'product' , 'middleware' => 'setLocale' ] , function(){
     Route::get('/filter' , [ProductController::class ,'filterProduct']);
+    Route::get('/discount' , [ProductController::class ,'productDiscounts']);
     Route::get('/{product_id}' , [ProductController::class ,'productDetails']);
     Route::get('/category/{category_id}' , [ProductController::class ,'showProductOfCategory']);
 });
