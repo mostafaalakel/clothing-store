@@ -4,14 +4,14 @@ namespace App\Http\Traits;
 
 trait ApiResponseTrait
 {
-   
+
     public function apiResponse($status = null, $message = null, $data = null, $code = 200)
     {
         $array = [
             'status' => $status,
             'message' => $message,
             'data' => $data ,
-            'status code' => $code 
+            'status code' => $code
         ];
 
         return response()->json($array, $code);

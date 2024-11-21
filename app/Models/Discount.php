@@ -20,4 +20,10 @@ class Discount extends Model
     {
         return $this->belongsToMany(Product::class, 'product_discounts');
     }
+
+    public function cartItems()
+    {
+        return $this->belongsToMany(CartItem::class, 'cart_item_discounts' , 'cart_item_id', 'discount_id');
+    }
+
 }

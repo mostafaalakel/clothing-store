@@ -47,11 +47,15 @@ class Product extends Model
     {
         if ($this->discounts->isNotEmpty()) {
             $price_after_discounts = $this->price;
+            $values_discounts = 0;
+
             foreach ($this->discounts as $discount) {
                 if ($discount->discount_application == 'general' && $discount->start_date <= now() && $discount->end_date >= now()) {
-                    $price_after_discounts -= $price_after_discounts * ($discount->value / 100);
+                    $values_discounts += $discount->value;
                 }
             }
+
+            $price_after_discounts -= $price_after_discounts * ($values_discounts / 100);
         }
         return $price_after_discounts;
     }
